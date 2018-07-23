@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasketController : MonoBehaviour {
+public class BasketBomCont : MonoBehaviour {
     public AudioClip appleSE;
     public AudioClip bombSE;
     AudioSource aud;
     GameObject director;
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Apple")
-        {
-            this.director.GetComponent<GameDirector>().GetApple();
-            this.aud.PlayOneShot(this.appleSE);
-        }
-        else
+        if (other.gameObject.tag == "Apple")
         {
             this.director.GetComponent<GameDirector>().GetBomb();
             this.aud.PlayOneShot(this.bombSE);
+        }
+        else
+        {
+            this.director.GetComponent<GameDirector>().GetApple();
+            this.aud.PlayOneShot(this.appleSE);
         }
         if (other.gameObject.tag == "Apple" || other.gameObject.tag == "Bomb")
         {
@@ -25,14 +25,16 @@ public class BasketController : MonoBehaviour {
         }
     }
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         this.director = GameObject.Find("GameDirector");
         this.aud = GetComponent<AudioSource>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetMouseButtonDown(0))
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -43,5 +45,7 @@ public class BasketController : MonoBehaviour {
                 transform.position = new Vector3(x, 0, z);
             }
         }
-	}
+    }
 }
+
+
